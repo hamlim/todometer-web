@@ -51,31 +51,31 @@ export default class Item extends React.Component {
             font-size: var(--itemFontSize);
           }  
           .item-name {
-            width: 400px;
+            max-width: 50vw;
             word-break: break-all;
           }
           .buttons button {
             position: relative;
             margin: 0 0 0 10px;
-            height: 24px;
+            height: 1.6rem;
             border: none;
           }
           .buttons button.delete {
-            width: 24px;
+            width: 1.6rem;
             background: no-repeat url('/static/assets/x.svg');
           }
           .buttons button.delete:after {
             background: var(--red);
           }
           .buttons button.pause {
-            width: 24px;
+            width: 1.6rem;
             background: no-repeat url('/static/assets/pause.svg');
           }
           .buttons button.pause:after {
             background: var(--yellow);
           }
           .buttons button.complete {
-            width: 30px;
+            width: 2rem;
             background: no-repeat url('/static/assets/check.svg');
           }
           .buttons button.complete:after {

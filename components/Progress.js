@@ -1,17 +1,18 @@
-import React from 'react';
-import ProgressBar from 'react-progressbar.js';
+import React from 'react'
+import { Line } from '../lib/react-progressbar'
+import vars from '../utils/vars'
 
 export default class Progress extends React.Component {
   render() {
-    let Bar = ProgressBar.Line;
+    let Bar = Line
     let options1 = {
       strokeWidth: 2,
-      color: '#62DCA5'
-    };
+      color: vars.colors.green
+    }
     let options2 = {
       strokeWidth: 2,
-      color: '#F7F879'
-    };
+      color: vars.colors.yellow
+    }
 
     return (
       <div className="progress">
@@ -19,12 +20,14 @@ export default class Progress extends React.Component {
           progress={this.props.paused}
           options={options2}
           initialAnimate={true}
-          containerClassName={'pause-bar'} />
+          containerClassName={'pause-bar'}
+        />
         <Bar
           progress={this.props.completed}
           options={options1}
           initialAnimate={true}
-          containerClassName={'complete-bar'} />
+          containerClassName={'complete-bar'}
+        />
         <style jsx global>{`
           .progress {
             position: relative;
@@ -45,6 +48,6 @@ export default class Progress extends React.Component {
           }
         `}</style>
       </div>
-    );
+    )
   }
 }

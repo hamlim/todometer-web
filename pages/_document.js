@@ -1,28 +1,33 @@
-import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
-import flush from 'styled-jsx/server';
+import React from 'react'
+import Document, { Head, Main, NextScript } from 'next/document'
+import flush from 'styled-jsx/server'
 
-import vars from '../utils/vars';
-const colors = vars.colors;
+import vars from '../utils/vars'
+const colors = vars.colors
 
 export default class MyDocument extends Document {
-  static getInitialProps ({ renderPage }) {
-    const {html, head} = renderPage()
+  static getInitialProps({ renderPage }) {
+    const { html, head } = renderPage()
     const styles = flush()
     return { html, head, styles }
   }
-  render () {
+  render() {
     return (
       <html>
         <Head>
-         <meta charset="UTF-8" />
-         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-         <style>{`
+          <meta charset="UTF-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <style>
+            {`
            :root {
             --bg: ${colors.bg};
             --green: ${colors.green};
             --yellow: ${colors.yellow};
             --red: ${colors.red};
+            --blue: ${colors.blue};
             --inputColor: ${colors.inputColor};
             --itemColor: ${colors.itemColor};
             --fontColor: ${colors.fontColor};
@@ -50,7 +55,8 @@ export default class MyDocument extends Document {
           #app {
             position: relative;
             margin: 40px auto;
-            width: 550px;
+            min-width: 60vw;
+            max-width: 90vw;
           }
 
           ::-webkit-scrollbar {
@@ -65,16 +71,16 @@ export default class MyDocument extends Document {
             border-radius: 0.5em;
           }
         `}
-        </style>
-       </Head>
-       <body>
-         <Main />
-         <NextScript />
-         <script type="text/javascript">
-           {`console.log('test');`}
-         </script>
-       </body>
-     </html>
+          </style>
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+          <script type="text/javascript">
+            {`console.log('test');`}
+          </script>
+        </body>
+      </html>
     )
   }
 }

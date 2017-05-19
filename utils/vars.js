@@ -4,11 +4,12 @@ export default {
     green: `#62DCA5`,
     yellow: `#F7F879`,
     red: `#E1675A`,
+    blue: `#16A9FF`,
     inputColor: `#2E2D33`,
     itemColor: `#4E4D5C`,
-    fontColor: `#FBFAFB`,
+    fontColor: `#FBFAFB`
   },
   bigFontSize: `64px`,
   headingFontSize: `24px`,
-  itemFontSize: `20px`,
-};
+  itemFontSize: `20px`
+}
