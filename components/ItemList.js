@@ -31,6 +31,13 @@ class ItemList extends React.Component {
     this.props.updateItem(completedItem)
   }
 
+  undoItem = item => {
+    const undoneItem = Object.assign({}, item, {
+      status: 'pending'
+    })
+    this.props.updateItem(undoneItem)
+  }
+
   pauseItem = item => {
     const pausedItem = Object.assign({}, item, {
       status: 'paused'
@@ -97,6 +104,30 @@ class ItemList extends React.Component {
     }
   }
 
+  renderCompleted = () => {
+    const completedItems = this.props.completedItems
+    if (completedItems !== undefined && completedItems.length > 0) {
+      return (
+        <div>
+          <h2>Done</h2>
+          {completedItems &&
+            completedItems.map(item => (
+              <Item
+                item={item}
+                text={item.text}
+                status={item.status}
+                key={item.key}
+                onUndo={this.undoItem}
+                onDelete={this.props.deleteItem}
+                completed={true}
+                pasued={false}
+              />
+            ))}
+        </div>
+      )
+    }
+  }
+
   render() {
     const { pendingItems } = this.props
     return (
@@ -127,6 +158,7 @@ class ItemList extends React.Component {
             })}
         </div>
         {this.renderPaused()}
+        {this.renderCompleted()}
         {this.renderReset()}
         <style jsx global>{`
           .reset {

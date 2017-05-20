@@ -1,41 +1,59 @@
-import React from 'react';
+import React from 'react'
 
 export default class Item extends React.Component {
   renderButtons = () => {
-    if (!this.props.paused) {
+    if (!this.props.paused && !this.props.completed) {
       return (
         <div className="buttons">
-          <button className="delete" onClick={() => this.props.onDelete(this.props.item)}></button>
-          <button className="pause" onClick={() => this.props.onPause(this.props.item)}></button>
-          <button className="complete" onClick={() => this.props.onComplete(this.props.item)}></button>
+          <button
+            className="delete"
+            onClick={() => this.props.onDelete(this.props.item)}
+          />
+          <button
+            className="pause"
+            onClick={() => this.props.onPause(this.props.item)}
+          />
+          <button
+            className="complete"
+            onClick={() => this.props.onComplete(this.props.item)}
+          />
         </div>
-      );
+      )
+    } else if (!this.props.paused && this.props.completed) {
+      console.log('rendering done items')
+      return (
+        <div className="buttons">
+          <button
+            className="delete"
+            onClick={_ => this.props.onDelete(this.props.item)}
+          />
+          <button
+            className="undo"
+            onClick={_ => this.props.onUndo(this.props.item)}
+          />
+        </div>
+      )
     }
     return (
       <div className="buttons">
-        <button className="delete" onClick={() => this.props.onDelete(this.props.item)}></button>
-        <button className="complete" onClick={() => this.props.onComplete(this.props.item)}></button>
+        <button
+          className="delete"
+          onClick={() => this.props.onDelete(this.props.item)}
+        />
+        <button
+          className="complete"
+          onClick={() => this.props.onComplete(this.props.item)}
+        />
       </div>
-      );
+    )
   }
 
   render() {
     return (
       <div className="item">
         <div className="item-name">{this.props.text}</div>
-        {this.props.paused ? (
-          <div className="buttons">
-            <button className="delete" onClick={() => this.props.onDelete(this.props.item)}></button>
-            <button className="complete" onClick={() => this.props.onComplete(this.props.item)}></button>
-          </div>
-        ) : (
-          <div className="buttons">
-            <button className="delete" onClick={() => this.props.onDelete(this.props.item)}></button>
-            <button className="pause" onClick={() => this.props.onPause(this.props.item)}></button>
-            <button className="complete" onClick={() => this.props.onComplete(this.props.item)}></button>
-          </div>
-        )}
-        <style jsx>{`
+        {this.renderButtons()}
+        <style jsx global>{`
           .item {
             display: flex;
             align-items: center;
@@ -49,7 +67,7 @@ export default class Item extends React.Component {
             border-radius: 3px;
             box-sizing: border-box;
             font-size: var(--itemFontSize);
-          }  
+          }
           .item-name {
             max-width: 50vw;
             word-break: break-all;
@@ -59,6 +77,9 @@ export default class Item extends React.Component {
             margin: 0 0 0 10px;
             height: 1.6rem;
             border: none;
+          }
+          .buttons button:focus {
+            outline: 1px solid var(--)
           }
           .buttons button.delete {
             width: 1.6rem;
@@ -81,6 +102,16 @@ export default class Item extends React.Component {
           .buttons button.complete:after {
             background: var(--green);
           }
+
+          .buttons button.undo {
+            width: 24px;
+            fill: var(--blue);
+            background: no-repeat url('/static/assets/repeat.svg');
+          }
+          .buttons button.undo:after {
+            background: var(--blue);
+          }
+
           .buttons button:after {
             display: block;
             content: '';
@@ -115,6 +146,6 @@ export default class Item extends React.Component {
           }
         `}</style>
       </div>
-    );
+    )
   }
 }
