@@ -5,9 +5,10 @@
 
 Goals:
 
-* Make it responsive
+* Make it responsive ✅
 * Add a stats dashboard
 * Implement server side data storage
+* rearrange todos
 * Implement original app features:  
   * History
   * Workspaces
