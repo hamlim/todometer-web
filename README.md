@@ -9,8 +9,10 @@ Goals:
 * Add a stats dashboard
 * Implement server side data storage
 * rearrange todos
+* PWA-ify the app
 * Implement original app features:  
   * History
   * Workspaces
   * labels/categories
   * edit added todos
+  * archive and undo ✅
