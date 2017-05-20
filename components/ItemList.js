@@ -139,6 +139,7 @@ class ItemList extends React.Component {
             placeholder="Add new item"
             autoFocus
           />
+          <label htmlFor="todoinput" className="hidden">Enter Todo</label>
           <button type="submit" />
         </form>
         <div className="item-container">
@@ -171,6 +172,15 @@ class ItemList extends React.Component {
             cursor: pointer;
             font-size: var(--itemFontSize);
             animation: fadeIn 1s;
+          }
+
+          .hidden {
+            position:absolute;
+            left:-10000px;
+            top:auto;
+            width:1px;
+            height:1px;
+            overflow:hidden;
           }
 
           @keyframes fadeIn {

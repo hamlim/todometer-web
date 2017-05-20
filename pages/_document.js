@@ -13,7 +13,7 @@ export default class MyDocument extends Document {
   }
   render() {
     return (
-      <html>
+      <html lang="en">
         <Head>
           <meta charset="UTF-8" />
           <meta
@@ -72,13 +72,12 @@ export default class MyDocument extends Document {
           }
         `}
           </style>
+          <title>Todometer-web</title>
         </Head>
         <body>
           <Main />
           <NextScript />
-          <script type="text/javascript">
-            {`console.log('test');`}
-          </script>
+          <script type="text/javascript" dangerouslySetInnerHTML={loadScript} />
         </body>
       </html>
     )

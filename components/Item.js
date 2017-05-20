@@ -6,15 +6,18 @@ export default class Item extends React.Component {
       return (
         <div className="buttons">
           <button
+            name="delete"
             className="delete"
             onClick={() => this.props.onDelete(this.props.item)}
           />
           <button
+            name="pause"
             className="pause"
             onClick={() => this.props.onPause(this.props.item)}
           />
           <button
             className="complete"
+            name="done"
             onClick={() => this.props.onComplete(this.props.item)}
           />
         </div>
@@ -24,11 +27,13 @@ export default class Item extends React.Component {
       return (
         <div className="buttons">
           <button
+            name="delete"
             className="delete"
             onClick={_ => this.props.onDelete(this.props.item)}
           />
           <button
             className="undo"
+            name="undo"
             onClick={_ => this.props.onUndo(this.props.item)}
           />
         </div>
@@ -38,10 +43,12 @@ export default class Item extends React.Component {
       <div className="buttons">
         <button
           className="delete"
+          name="delete"
           onClick={() => this.props.onDelete(this.props.item)}
         />
         <button
           className="complete"
+          name="done"
           onClick={() => this.props.onComplete(this.props.item)}
         />
       </div>
