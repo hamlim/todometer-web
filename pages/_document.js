@@ -77,7 +77,6 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script type="text/javascript" dangerouslySetInnerHTML={loadScript} />
         </body>
       </html>
     )
