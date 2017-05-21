@@ -138,6 +138,7 @@ class ItemList extends React.Component {
             ref={a => (this._inputElement = a)}
             placeholder="Add new item"
             autoFocus
+            id="todoinput"
           />
           <label htmlFor="todoinput" className="hidden">Enter Todo</label>
           <button type="submit" />
