@@ -85,9 +85,6 @@ export default class Item extends React.Component {
             height: 1.6rem;
             border: none;
           }
-          .buttons button:focus {
-            outline: 1px solid var(--)
-          }
           .buttons button.delete {
             width: 1.6rem;
             background: no-repeat url('/static/assets/x.svg');

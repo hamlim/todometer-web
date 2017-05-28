@@ -31,6 +31,7 @@ export default class MyDocument extends Document {
             --inputColor: ${colors.inputColor};
             --itemColor: ${colors.itemColor};
             --fontColor: ${colors.fontColor};
+            --gray: ${colors.gray};
 
             --bigFontSize: ${vars.bigFontSize};
             --headingFontSize: ${vars.headingFontSize};
@@ -43,9 +44,17 @@ export default class MyDocument extends Document {
             box-sizing: border-box;
           }
 
+          html {
+            min-height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+          }
+
           body {
             margin: 0;
             padding: 0;
+            width: 100vw;
             background: var(--bg);
             color: var(--fontColor);
             font-family: Helvetica, Arial, sans-serif;
