@@ -1,21 +1,72 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addItem, updateItem, deleteItem, resetAll } from '../actions.js'
-import {
-  getAllItems,
-  getPendingItems,
-  getCompletedItems,
-  getPausedItems
-} from '../reducers/item-list.js'
+import { getAllItems, getPendingItems, getCompletedItems, getPausedItems } from '../reducers/item-list.js'
 import Item from './Item'
 import Progress from './Progress'
 
+import { keyframes } from 'emotion'
+import styled from 'emotion/react'
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
+const Reset = styled.div`text-align: center;`
+const ResetButton = styled.button`
+  background: transparent;
+  border: none;
+  color: var(--fontColor);
+  cursor: pointer;
+  font-size: var(--itemFontSize);
+  animation: ${fadeIn} 1s;
+`
+
+const HiddenLabel = styled.label`
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+`
+
+const Form = styled.form`position: relative;`
+const FormInput = styled.input`
+  margin: 0 0 10px 0;
+  padding: 20px 70px 20px 20px;
+  width: 100%;
+  height: 70px;
+  background: var(--inputColor);
+  border: none;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: var(--fontColor);
+  font-size: var(--itemFontSize);
+  outline: none;
+`
+const FormButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background: no-repeat url('/static/assets/plus.svg');
+  border: none;
+`
+
 class ItemList extends React.Component {
   addItem = e => {
+    e.preventDefault()
+    e.stopPropagation()
     const newItem = {
       text: this._inputElement.value,
       key: Date.now(),
-      status: 'pending'
+      status: 'pending',
     }
 
     if (!!newItem.text.trim()) this.props.addItem(newItem)
@@ -26,21 +77,21 @@ class ItemList extends React.Component {
 
   completeItem = item => {
     const completedItem = Object.assign({}, item, {
-      status: 'complete'
+      status: 'complete',
     })
     this.props.updateItem(completedItem)
   }
 
   undoItem = item => {
     const undoneItem = Object.assign({}, item, {
-      status: 'pending'
+      status: 'pending',
     })
     this.props.updateItem(undoneItem)
   }
 
   pauseItem = item => {
     const pausedItem = Object.assign({}, item, {
-      status: 'paused'
+      status: 'paused',
     })
     this.props.updateItem(pausedItem)
   }
@@ -61,9 +112,7 @@ class ItemList extends React.Component {
       pausedPercentage = 0
     }
 
-    return (
-      <Progress completed={completedPercentage} paused={pausedPercentage} />
-    )
+    return <Progress completed={completedPercentage} paused={pausedPercentage} />
   }
 
   renderReset = () => {
@@ -72,9 +121,9 @@ class ItemList extends React.Component {
 
     if (completedAmount > 0 || pausedAmount > 0) {
       return (
-        <div className="reset">
-          <button onClick={this.props.resetAll}>reset progress</button>
-        </div>
+        <Reset>
+          <ResetButton onClick={this.props.resetAll}>reset progress</ResetButton>
+        </Reset>
       )
     }
   }
@@ -111,7 +160,7 @@ class ItemList extends React.Component {
         <div>
           <h2>Done</h2>
           {completedItems &&
-            completedItems.map(item => (
+            completedItems.map(item =>
               <Item
                 item={item}
                 text={item.text}
@@ -121,8 +170,8 @@ class ItemList extends React.Component {
                 onDelete={this.props.deleteItem}
                 completed={true}
                 pasued={false}
-              />
-            ))}
+              />,
+            )}
         </div>
       )
     }
@@ -131,19 +180,19 @@ class ItemList extends React.Component {
   render() {
     const { pendingItems } = this.props
     return (
-      <div className="item-list">
+      <div>
         {this.renderProgress()}
-        <form className="form" onSubmit={this.addItem}>
-          <input
-            ref={a => (this._inputElement = a)}
+        <Form onSubmit={this.addItem}>
+          <FormInput
+            innerRef={a => {this._inputElement = a}}
             placeholder="Add new item"
             autoFocus
             id="todoinput"
           />
-          <label htmlFor="todoinput" className="hidden">Enter Todo</label>
-          <button type="submit" />
-        </form>
-        <div className="item-container">
+          <HiddenLabel htmlFor="todoinput">Enter Todo</HiddenLabel>
+          <FormButton type="submit" />
+        </Form>
+        <div>
           {pendingItems &&
             pendingItems.map(item => {
               return (
@@ -162,78 +211,6 @@ class ItemList extends React.Component {
         {this.renderPaused()}
         {this.renderCompleted()}
         {this.renderReset()}
-        <style jsx global>{`
-          .reset {
-            text-align: center;
-          }
-          .reset button {
-            background: transparent;
-            border: none;
-            color: var(--fontColor);
-            cursor: pointer;
-            font-size: var(--itemFontSize);
-            animation: fadeIn 1s;
-          }
-
-          .hidden {
-            position:absolute;
-            left:-10000px;
-            top:auto;
-            width:1px;
-            height:1px;
-            overflow:hidden;
-          }
-
-          @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-          }
-
-          .form {
-            position: relative;
-          }
-          .form input {
-            margin: 0 0 10px 0;
-            padding: 20px 70px 20px 20px;
-            width: 100%;
-            height: 70px;
-            background:var(--inputColor);
-            border: none;
-            border-radius: 3px;
-            box-sizing: border-box;
-            color: var(--fontColor);
-            font-size: var(--itemFontSize);
-            outline: none;
-          }
-          .form button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 30px;
-            height: 30px;
-            background: no-repeat url('/static/assets/plus.svg');
-            border: none;
-            /* TODO: Fix plus sign animation
-            /*&:after {
-              display: block;
-              content: '';
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              background: #FFF;
-              transform: translate(-50%, -50%);
-              border-radius: 100%;
-              width: 0;
-              height: 0;
-            }
-            &:focus {
-              outline: none;
-            }
-            &:focus:after {
-              animation: click .5s;
-            }*/
-          }
-        `}</style>
       </div>
     )
   }
@@ -243,14 +220,14 @@ const mapStateToProps = state => ({
   allItems: getAllItems(state),
   pendingItems: getPendingItems(state),
   completedItems: getCompletedItems(state),
-  pausedItems: getPausedItems(state)
+  pausedItems: getPausedItems(state),
 })
 
 const mapDispatchToProps = dispatch => ({
   addItem: item => dispatch(addItem(item)),
   updateItem: item => dispatch(updateItem(item)),
   deleteItem: item => dispatch(deleteItem(item)),
-  resetAll: item => dispatch(resetAll(item))
+  resetAll: item => dispatch(resetAll(item)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList)
