@@ -3,7 +3,7 @@
     "emotion": "^8.0.12",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
-    "next": "^4.2.3",
+    "next": "^9.3.2",
     "polished": "^1.9.0",
     "progressbar.js": "^1.0.1",
     "react": "^16.2.0",
