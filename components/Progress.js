@@ -1,8 +1,8 @@
-import React from 'react'
-import { Line as Bar } from '../lib/react-progressbar'
-import vars from '../utils/vars'
-import styled from 'emotion/react'
-import { injectGlobal } from 'emotion'
+import React from "react";
+import { Line as Bar } from "../lib/react-progressbar";
+import vars from "../utils/vars";
+import styled from "@emotion/styled";
+import { injectGlobal } from "emotion";
 
 injectGlobal`
   .pause-bar,
@@ -16,7 +16,7 @@ injectGlobal`
     height: 15px;
     border-radius: 3px;
   }
-`
+`;
 
 const ProgressContainer = styled.div`
   position: relative;
@@ -25,17 +25,17 @@ const ProgressContainer = styled.div`
   margin: 0 0 20px;
   background: var(--inputColor);
   border-radius: 3px;
-`
+`;
 
 export default class Progress extends React.Component {
   options1 = {
     strokeWidth: 2,
     color: vars.colors.green,
-  }
+  };
   options2 = {
     strokeWidth: 2,
     color: vars.colors.yellow,
-  }
+  };
   render() {
     return (
       <ProgressContainer>
@@ -43,15 +43,15 @@ export default class Progress extends React.Component {
           progress={this.props.paused}
           options={this.options2}
           initialAnimate={true}
-          containerClassName={'pause-bar'}
+          containerClassName={"pause-bar"}
         />
         <Bar
           progress={this.props.completed}
           options={this.options1}
           initialAnimate={true}
-          containerClassName={'complete-bar'}
+          containerClassName={"complete-bar"}
         />
       </ProgressContainer>
-    )
+    );
   }
 }

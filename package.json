@@ -1,13 +1,17 @@
 {
   "dependencies": {
-    "emotion": "^8.0.12",
+    "@emotion/core": "^10.0.28",
+    "@emotion/css": "^10.0.27",
+    "@emotion/react": "^11.0.0-next.14",
+    "@emotion/styled": "^10.0.27",
+    "emotion": "^10.0.27",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
-    "next": "^4.2.3",
+    "next": "^9.5.1",
     "polished": "^1.9.0",
     "progressbar.js": "^1.0.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-progressbar": "^15.4.1",
     "react-progressbar.js": "^0.2.0",
     "react-redux": "^5.0.6",
@@ -19,6 +23,10 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "vercel"
+  },
+  "devDependencies": {
+    "vercel": "^19.2.0"
   }
 }

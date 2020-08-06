@@ -1,12 +1,17 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { addItem, updateItem, deleteItem, resetAll } from '../actions.js'
-import { getAllItems, getPendingItems, getCompletedItems, getPausedItems } from '../reducers/item-list.js'
-import Item from './Item'
-import Progress from './Progress'
+import React from "react";
+import { connect } from "react-redux";
+import { addItem, updateItem, deleteItem, resetAll } from "../actions.js";
+import {
+  getAllItems,
+  getPendingItems,
+  getCompletedItems,
+  getPausedItems,
+} from "../reducers/item-list.js";
+import Item from "./Item";
+import Progress from "./Progress";
 
-import { keyframes } from 'emotion'
-import styled from 'emotion/react'
+import { keyframes } from "@emotion/core";
+import styled from "@emotion/styled";
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -14,9 +19,11 @@ const fadeIn = keyframes`
   to {
     opacity: 1;
   }
-`
+`;
 
-const Reset = styled.div`text-align: center;`
+const Reset = styled.div`
+  text-align: center;
+`;
 const ResetButton = styled.button`
   background: transparent;
   border: none;
@@ -24,7 +31,7 @@ const ResetButton = styled.button`
   cursor: pointer;
   font-size: var(--itemFontSize);
   animation: ${fadeIn} 1s;
-`
+`;
 
 const HiddenLabel = styled.label`
   position: absolute;
@@ -33,9 +40,11 @@ const HiddenLabel = styled.label`
   width: 1px;
   height: 1px;
   overflow: hidden;
-`
+`;
 
-const Form = styled.form`position: relative;`
+const Form = styled.form`
+  position: relative;
+`;
 const FormInput = styled.input`
   margin: 0 0 10px 0;
   padding: 20px 70px 20px 20px;
@@ -48,94 +57,98 @@ const FormInput = styled.input`
   color: var(--fontColor);
   font-size: var(--itemFontSize);
   outline: none;
-`
+`;
 const FormButton = styled.button`
   position: absolute;
   top: 20px;
   right: 20px;
   width: 30px;
   height: 30px;
-  background: no-repeat url('/static/assets/plus.svg');
+  background: no-repeat url("/static/assets/plus.svg");
   border: none;
-`
+`;
 
 class ItemList extends React.Component {
-  addItem = e => {
-    e.preventDefault()
-    e.stopPropagation()
+  addItem = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const newItem = {
       text: this._inputElement.value,
       key: Date.now(),
-      status: 'pending',
-    }
+      status: "pending",
+    };
 
-    if (!!newItem.text.trim()) this.props.addItem(newItem)
-    e.preventDefault()
-    this._inputElement.value = ''
-    this._inputElement.focus()
-  }
+    if (!!newItem.text.trim()) this.props.addItem(newItem);
+    e.preventDefault();
+    this._inputElement.value = "";
+    this._inputElement.focus();
+  };
 
-  completeItem = item => {
+  completeItem = (item) => {
     const completedItem = Object.assign({}, item, {
-      status: 'complete',
-    })
-    this.props.updateItem(completedItem)
-  }
+      status: "complete",
+    });
+    this.props.updateItem(completedItem);
+  };
 
-  undoItem = item => {
+  undoItem = (item) => {
     const undoneItem = Object.assign({}, item, {
-      status: 'pending',
-    })
-    this.props.updateItem(undoneItem)
-  }
+      status: "pending",
+    });
+    this.props.updateItem(undoneItem);
+  };
 
-  pauseItem = item => {
+  pauseItem = (item) => {
     const pausedItem = Object.assign({}, item, {
-      status: 'paused',
-    })
-    this.props.updateItem(pausedItem)
-  }
+      status: "paused",
+    });
+    this.props.updateItem(pausedItem);
+  };
 
   renderProgress = () => {
-    const completedAmount = this.props.completedItems.length
-    const pausedAmount = this.props.pausedItems.length
-    const totalAmount = this.props.allItems.length
+    const completedAmount = this.props.completedItems.length;
+    const pausedAmount = this.props.pausedItems.length;
+    const totalAmount = this.props.allItems.length;
 
-    let completedPercentage = completedAmount / totalAmount
-    let pausedPercentage = pausedAmount / totalAmount + completedPercentage
+    let completedPercentage = completedAmount / totalAmount;
+    let pausedPercentage = pausedAmount / totalAmount + completedPercentage;
 
     if (isNaN(completedPercentage)) {
-      completedPercentage = 0
+      completedPercentage = 0;
     }
 
     if (isNaN(pausedPercentage)) {
-      pausedPercentage = 0
+      pausedPercentage = 0;
     }
 
-    return <Progress completed={completedPercentage} paused={pausedPercentage} />
-  }
+    return (
+      <Progress completed={completedPercentage} paused={pausedPercentage} />
+    );
+  };
 
   renderReset = () => {
-    const completedAmount = this.props.completedItems.length
-    const pausedAmount = this.props.pausedItems.length
+    const completedAmount = this.props.completedItems.length;
+    const pausedAmount = this.props.pausedItems.length;
 
     if (completedAmount > 0 || pausedAmount > 0) {
       return (
         <Reset>
-          <ResetButton onClick={this.props.resetAll}>reset progress</ResetButton>
+          <ResetButton onClick={this.props.resetAll}>
+            reset progress
+          </ResetButton>
         </Reset>
-      )
+      );
     }
-  }
+  };
 
   renderPaused = () => {
-    const pausedItems = this.props.pausedItems
+    const pausedItems = this.props.pausedItems;
     if (pausedItems !== undefined && pausedItems.length > 0) {
       return (
         <div>
           <h2>Do Later</h2>
           {pausedItems &&
-            pausedItems.map(item => {
+            pausedItems.map((item) => {
               return (
                 <Item
                   item={item}
@@ -146,21 +159,21 @@ class ItemList extends React.Component {
                   onDelete={this.props.deleteItem}
                   paused={true}
                 />
-              )
+              );
             })}
         </div>
-      )
+      );
     }
-  }
+  };
 
   renderCompleted = () => {
-    const completedItems = this.props.completedItems
+    const completedItems = this.props.completedItems;
     if (completedItems !== undefined && completedItems.length > 0) {
       return (
         <div>
           <h2>Done</h2>
           {completedItems &&
-            completedItems.map(item =>
+            completedItems.map((item) => (
               <Item
                 item={item}
                 text={item.text}
@@ -170,21 +183,23 @@ class ItemList extends React.Component {
                 onDelete={this.props.deleteItem}
                 completed={true}
                 pasued={false}
-              />,
-            )}
+              />
+            ))}
         </div>
-      )
+      );
     }
-  }
+  };
 
   render() {
-    const { pendingItems } = this.props
+    const { pendingItems } = this.props;
     return (
       <div>
         {this.renderProgress()}
         <Form onSubmit={this.addItem}>
           <FormInput
-            innerRef={a => {this._inputElement = a}}
+            innerRef={(a) => {
+              this._inputElement = a;
+            }}
             placeholder="Add new item"
             autoFocus
             id="todoinput"
@@ -194,7 +209,7 @@ class ItemList extends React.Component {
         </Form>
         <div>
           {pendingItems &&
-            pendingItems.map(item => {
+            pendingItems.map((item) => {
               return (
                 <Item
                   item={item}
@@ -205,29 +220,29 @@ class ItemList extends React.Component {
                   onDelete={this.props.deleteItem}
                   onPause={this.pauseItem}
                 />
-              )
+              );
             })}
         </div>
         {this.renderPaused()}
         {this.renderCompleted()}
         {this.renderReset()}
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   allItems: getAllItems(state),
   pendingItems: getPendingItems(state),
   completedItems: getCompletedItems(state),
   pausedItems: getPausedItems(state),
-})
+});
 
-const mapDispatchToProps = dispatch => ({
-  addItem: item => dispatch(addItem(item)),
-  updateItem: item => dispatch(updateItem(item)),
-  deleteItem: item => dispatch(deleteItem(item)),
-  resetAll: item => dispatch(resetAll(item)),
-})
+const mapDispatchToProps = (dispatch) => ({
+  addItem: (item) => dispatch(addItem(item)),
+  updateItem: (item) => dispatch(updateItem(item)),
+  deleteItem: (item) => dispatch(deleteItem(item)),
+  resetAll: (item) => dispatch(resetAll(item)),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemList)
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

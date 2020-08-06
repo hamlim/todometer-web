@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'emotion/react'
-import { keyframes } from 'emotion'
+import React from "react";
+import styled from "@emotion/styled";
+import { keyframes } from "@emotion/core";
 
 const click = keyframes`
   0% {
@@ -16,7 +16,7 @@ const click = keyframes`
     width: 30px;
     height: 30px;
   }
-`
+`;
 
 const ItemWrapper = styled.div`
   display: flex;
@@ -31,12 +31,12 @@ const ItemWrapper = styled.div`
   border-radius: 3px;
   box-sizing: border-box;
   font-size: var(--itemFontSize);
-`
+`;
 
 const ItemName = styled.div`
   max-width: 50vw;
   word-break: break-all;
-`
+`;
 
 const DefaultButton = styled.button`
   position: relative;
@@ -45,7 +45,7 @@ const DefaultButton = styled.button`
   border: none;
   &:after {
     display: block;
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -57,74 +57,93 @@ const DefaultButton = styled.button`
   &:focus {
     outline: none;
     &:after {
-      animation: ${click} .5s;
+      animation: ${click} 0.5s;
     }
   }
-`
+`;
 
 const DeleteButton = styled(DefaultButton)`
   width: 1.6rem;
-  background: no-repeat url('/static/assets/x.svg');
+  background: no-repeat url("/static/assets/x.svg");
   &:after {
     background: var(--red);
   }
-`
+`;
 
 const PauseButton = styled(DefaultButton)`
   width: 1.6rem;
-  background: no-repeat url('/static/assets/pause.svg');
+  background: no-repeat url("/static/assets/pause.svg");
   &:after {
     background: var(--yellow);
   }
-`
+`;
 
 const CompleteButton = styled(DefaultButton)`
   width: 2rem;
-  background: no-repeat url('/static/assets/check.svg');
+  background: no-repeat url("/static/assets/check.svg");
   &:after {
     background: var(--green);
   }
-`
+`;
 
 const UndoButton = styled(DefaultButton)`
   width: 24px;
   fill: var(--blue);
   background: no-repeat url('/static/assets/repeat.svg');,
-`
+`;
 export default class Item extends React.Component {
   renderButtons = () => {
     if (!this.props.paused && !this.props.completed) {
       return (
         <div>
-          <DeleteButton aria-label="delete" onClick={() => this.props.onDelete(this.props.item)} />
-          <PauseButton aria-label="pause" onClick={() => this.props.onPause(this.props.item)} />
-          <CompleteButton aria-label="done" onClick={() => this.props.onComplete(this.props.item)} />
+          <DeleteButton
+            aria-label="delete"
+            onClick={() => this.props.onDelete(this.props.item)}
+          />
+          <PauseButton
+            aria-label="pause"
+            onClick={() => this.props.onPause(this.props.item)}
+          />
+          <CompleteButton
+            aria-label="done"
+            onClick={() => this.props.onComplete(this.props.item)}
+          />
         </div>
-      )
+      );
     } else if (!this.props.paused && this.props.completed) {
       return (
         <div>
-          <DeleteButton aria-label="delete" onClick={_ => this.props.onDelete(this.props.item)} />
-          <UndoButton aria-label="undo" onClick={_ => this.props.onUndo(this.props.item)} />
+          <DeleteButton
+            aria-label="delete"
+            onClick={(_) => this.props.onDelete(this.props.item)}
+          />
+          <UndoButton
+            aria-label="undo"
+            onClick={(_) => this.props.onUndo(this.props.item)}
+          />
         </div>
-      )
+      );
     }
     return (
       <div>
-        <DeleteButton aria-label="delete" onClick={() => this.props.onDelete(this.props.item)} />
-        <CompleteButton aria-label="done" onClick={() => this.props.onComplete(this.props.item)} />
+        <DeleteButton
+          aria-label="delete"
+          onClick={() => this.props.onDelete(this.props.item)}
+        />
+        <CompleteButton
+          aria-label="done"
+          onClick={() => this.props.onComplete(this.props.item)}
+        />
       </div>
-    )
-  }
+    );
+  };
 
   render() {
     return (
       <ItemWrapper>
-        <ItemName>
-          {this.props.text}
-        </ItemName>
+        <ItemName>{this.props.text}</ItemName>
         {this.renderButtons()}
       </ItemWrapper>
-    )
+    );
   }
 }
