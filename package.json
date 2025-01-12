@@ -9,7 +9,7 @@
     "moment": "^2.29.2",
     "next": "^9.5.4",
     "polished": "^1.9.0",
-    "progressbar.js": "^1.0.1",
+    "progressbar.js": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-progressbar": "^15.4.1",
